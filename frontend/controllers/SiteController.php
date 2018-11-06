@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Functions;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -70,9 +71,11 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($model = null)
     {
-        return $this->render('index');
+        $contact_form = new ContactForm();
+
+        return $this->render('index',['model' => $contact_form]);
     }
 
     /**
@@ -125,11 +128,9 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
 
-            return $this->refresh();
+            return $this->goHome();
         } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
+            return $this->actionIndex($model);
         }
     }
 

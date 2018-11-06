@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-md-5  wow fadeInDown" data-wow-delay="0.6s">
-                <div class="profile"> <img src="images/about/about-img1.jpg" alt="profile img" class="img-responsive"> </div> <!--change the profile image-->
+                <div class="profile"> <img src="/images/about/about-img1.jpg" alt="profile img" class="img-responsive"> </div> <!--change the profile image-->
             </div>
         </div>
 
@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="col-md-5  wow fadeInDown" data-wow-delay="0.6s">
-                <div class="profile"> <img src="images/about/about-img2.jpg" alt="profile img" class="img-responsive"> </div> <!--change the profile image-->
+                <div class="profile"> <img src="/images/about/about-img2.jpg" alt="profile img" class="img-responsive"> </div> <!--change the profile image-->
             </div>
         </div>
 
@@ -140,15 +140,15 @@
                 <!--<p>Волейбол (Ч/Ж)</p> <p>Настільний теніс</p> <p>Легка атлетика, теніс</p>  <p>Бадмінтон Аеробіка (спортивна аеробіка, черлідінг, хіп-хоп, аероденс)</p>  <p>Самбо, дзюдо</p>  <p>Туризм (альпінізм, скелелазіння, водний туризм, спортивне оріентування)</p> -->
                 <div class="blog-tags">
                     <ul>
-                        <li><a href="#">Волейбол(Ч/Ж)</a></li>
-                        <li><a href="#">Настільний теніс</a></li>
-                        <li><a href="#">Легка атлетика</a></li>
-                        <li><a href="#">Теніс</a></li>
-                        <li><a href="#">Бадмінтон</a></li>
-                        <li><a href="#">Аеробіка</a></li>
-                        <li><a href="#">Самбо</a></li>
-                        <li><a href="#">дзюдо</a></li>
-                        <li><a href="#">Туризм</a></li>
+                        <li class="section"><a href="#">Волейбол(Ч/Ж)</a></li>
+                        <li class="section"><a href="#">Настільний теніс</a></li>
+                        <li class="section"><a href="#">Легка атлетика</a></li>
+                        <li class="section"><a href="#">Теніс</a></li>
+                        <li class="section"><a href="#">Бадмінтон</a></li>
+                        <li class="section"><a href="#">Аеробіка</a></li>
+                        <li class="section"><a href="#">Самбо</a></li>
+                        <li class="section"><a href="#">дзюдо</a></li>
+                        <li class="section"><a href="#">Туризм</a></li>
                     </ul>
                 </div>
             </div>
@@ -172,7 +172,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 box-contact-form">
 
-                <form id="contact-form" method="post" action="contact.php">
+                <form  method="post" action="/site/contact">
 
                     <div class="messages"></div> <!--you can change the message in contact.php file -->
 
@@ -181,26 +181,33 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group wow fadeInDown" data-wow-delay="0.2s">
-                                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Enter your full name *" required="required" data-error="Fullname is required.">
+                                    <input id="form_name" type="text" name="ContactForm[name]" value="<?= $model->name?:''?>" class="form-control" placeholder="Ваше iм'я *" required="required" data-error="Fullname is required.">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group wow fadeInDown" data-wow-delay="0.4s">
-                                    <input id="form_email" type="email" name="email" class="form-control" placeholder="Enter your email *" required="required" data-error="Valid email is required.">
+                                    <input id="form_email" type="email" name="ContactForm[email]" value="<?= $model->email?:''?>" class="form-control" placeholder="Email *" required="required" data-error="Valid email is required.">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group wow fadeInUp" data-wow-delay="0.6s">
-                                    <textarea id="form_message" name="message" class="form-control" placeholder="Your Message *" rows="4" required="required" data-error="Leave a message for me"></textarea>
+                                <div class="form-group wow fadeInDown" data-wow-delay="0.4s">
+                                    <input id="form_subject" type="text" name="ContactForm[subject]" value="<?= $model->subject?:''?>" class="form-control" placeholder="Мета  *" required="required" data-error="Subject is required.">
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-send" value="">Send message</button>
+                                <div class="form-group wow fadeInUp" data-wow-delay="0.6s">
+                                    <textarea id="form_message" name="ContactForm[body]"  class="form-control" placeholder="Повiдомлення *" rows="4" required="required" data-error="Leave a message for me"><?= $model->body?:''?></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <button class="btn btn-send">Вiдправити</button>
                             </div>
                         </div>
                     </div>
@@ -212,6 +219,20 @@
         </div>
     </div>
 </div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        //your code here
+        $(".section").on('click',function (e) {
+            e.preventDefault();
+            var section_name = this.firstChild.textContent;
+            $('#form_subject').val('Запис на секцiю '+ '"'+section_name+'"');
+            $('form_email').focus();
+        })
+    });
+
+</script>
 
 <!--Contact Area Ends-->
 
